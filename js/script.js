@@ -104,19 +104,18 @@ function renderBookItem(bookObject) {
     container.append(textContainer);
     container.setAttribute('id', `book-${bookObject.id}`);
     
+    const trashButton = document.createElement('button');
+    trashButton.classList.add('trash-button');    
+    trashButton.addEventListener('click', function () {
+        removeTaskFromCompleted(bookObject.id);
+    });
+    
     if (bookObject.isComplete) {
         const undoButton = document.createElement('button');
         undoButton.classList.add('undo-button');
         
         undoButton.addEventListener('click', function () {
             undoTaskFromCompleted(bookObject.id);
-        });
-        
-        const trashButton = document.createElement('button');
-        trashButton.classList.add('trash-button');
-        
-        trashButton.addEventListener('click', function () {
-            removeTaskFromCompleted(bookObject.id);
         });
         
         container.append(undoButton, trashButton);
@@ -128,7 +127,7 @@ function renderBookItem(bookObject) {
             addTaskToCompleted(bookObject.id);
         });
         
-        container.append(checkButton);
+        container.append(checkButton, trashButton);
     }
     
     return container;
